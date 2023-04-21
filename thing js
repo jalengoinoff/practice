@@ -1,0 +1,42 @@
+const addlist = document.getElementById("add-list");
+ const listing = document.getElementById("listing");
+
+ const savedthingtodos = Json.parse(locslStorage.getItem("thingtodos")) || [];
+ for (let i = 0 ; i < savedthingtodos.length; i ++){
+    let newthingtodo = document.createElement("li");
+    newthingtodo.innerText = savedthingtodos[i].task;
+    newthingtodo.isCompleted = savedthingtodos[i].isCompleted ? true : false;
+    if(newthingtodo.isCompleted) {
+        newthingtodo.style.textDecoration ="line-through";
+    }
+  listing.appendChild(newthingtodo);
+ }
+
+addlist.addEventListener("submit",function(event){
+    event.preventDefault();
+    let newthingtodo = document.createElement("li");
+    let taskValue = document.createElement("task").value;
+    newthingtodo.innerText = taskValue;
+    newthingtodo.isCompleted = false;
+    addlist.appendChild(newthingtodo);
+    savedthingtodos.push({ task:newthingtodo.innerText,isCompleted: false });
+    localStorage.setItem("thingtodo", JSON.stringify(savedthingtodos));
+});
+
+listing.addEventListener("click",function(event) {
+    let click = event.target;
+    if (!click.isCompleted) {
+       click.style.textDecoration = "line-through";
+        click.isCompleted= true;
+     } else{
+        click.style.textDecoration = "none";
+        click.isCompleted = false;
+    }
+for(let i = 0; i < savedthingtodos.length; i++){
+  if(savedthingtodos[i].task === click.innerText){
+    savedthingtodos[i].isCompleted = !savedthingtodos;
+    localStorage.setItem("thingtodo",JSON.stringify(savedthingtodos));
+     }
+    }
+});
+v
